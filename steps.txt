@@ -1,0 +1,47 @@
+gradle init --dsl kotlin
+mkdir -p src/main/kotlin
+
+open project
+
+define buildscript
+buildscript {
+    repositories {
+        jcenter()
+    }
+}
+
+define plugins
+plugins {
+    id("nebula.kotlin") version "1.2.41"
+}
+
+apply<ApplicationPlugin>()
+configure<ApplicationPluginConvention> {
+    mainClassName = "MainKt" // haha
+}
+
+define repositories
+repositories {
+    jcenter()
+}
+
+define dependencies
+dependencies {
+    compile("me.drmaas:ratpack-kotlin-dsl:1.4.1")
+}
+
+main.kt
+
+fun main(args: Array<String>) {
+    ratpack {
+        handlers {
+            get {
+                render(json(mapOf("status" to "ok")))
+            }
+        }
+    }
+}
+
+./gradlew run
+
+curl localhost:5050

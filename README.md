@@ -46,8 +46,9 @@ repositories {
 
 Define dependencies
 ```
+val ratpackKotlin = "1.4.1"
 dependencies {
-    implementation("me.drmaas:ratpack-kotlin-dsl:1.4.1")
+    implementation("me.drmaas:ratpack-kotlin-dsl:$ratpackKotlin")
 }
 ```
 

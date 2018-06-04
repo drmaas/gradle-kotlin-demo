@@ -10,6 +10,8 @@ buildscript {
     }
 }
 
+val ratpackKotlin = "1.4.1"
+
 plugins {
     id("nebula.kotlin") version "1.2.41"
 }
@@ -30,5 +32,5 @@ repositories {
 }
 
 dependencies {
-    implementation("me.drmaas:ratpack-kotlin-dsl:1.4.1")
+    implementation("me.drmaas:ratpack-kotlin-dsl:$ratpackKotlin")
 }

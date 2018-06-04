@@ -14,6 +14,12 @@ plugins {
     id("nebula.kotlin") version "1.2.41"
 }
 
+apply<MyPlugin>()
+configure<MessageExtension> {
+    message = "you have the bridge #1"
+}
+
+
 apply<ApplicationPlugin>()
 configure<ApplicationPluginConvention> {
     mainClassName = "MainKt" // haha
@@ -24,5 +30,5 @@ repositories {
 }
 
 dependencies {
-    compile("me.drmaas:ratpack-kotlin-dsl:1.4.1")
+    implementation("me.drmaas:ratpack-kotlin-dsl:1.4.1")
 }

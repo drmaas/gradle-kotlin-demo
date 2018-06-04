@@ -47,7 +47,7 @@ repositories {
 Define dependencies
 ```
 dependencies {
-    compile("me.drmaas:ratpack-kotlin-dsl:1.4.1")
+    implementation("me.drmaas:ratpack-kotlin-dsl:1.4.1")
 }
 ```
 
@@ -76,4 +76,81 @@ curl localhost:5050
 
 ### Plugin setup
 
-TODO
+This will be added to the `buildSrc` directory to make things simpler for the demo. 
+The same can be applied to a standalone project.
+
+Setup
+```
+mkdir buildSrc/src/main/kotlin
+```
+
+Create the `buildSrc` build script - `buildSrc/build.gradle.kts`
+```
+plugins {
+    `kotlin-dsl`
+    `java-gradle-plugin`
+}
+```
+
+Create `MyPlugin.kt`
+```
+open class MyPlugin : Plugin<Project> {
+
+    override fun apply(project: Project) {
+        project.run {
+            tasks {
+                "picardTask"(DefaultTask::class) {
+                    doLast {
+                        println("engage")
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+Apply it to the main project `build.gradle.kts`
+```
+apply<MyPlugin>()
+```
+
+Run the task
+```
+./gradlew picardTask
+```
+
+Now add an extension class to the plugin
+```
+open class MessageExtension {
+    var message: String = "engage"
+}
+```
+```
+...
+val message = extensions.create("message", MessageExtension::class.java)
+tasks {
+    "picardTask"(DefaultTask::class) {
+        doLast {
+            println(message.message)
+        }
+    }
+}
+...
+```
+
+And apply it
+```
+apply<MyPlugin>()
+configure<MessageExtension> {
+    message = "you have the bridge #1"
+}
+```
+
+Run the task again
+```
+./gradlew picardTask
+```
+
+
+
